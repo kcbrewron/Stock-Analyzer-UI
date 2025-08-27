@@ -11,22 +11,12 @@
         "directory": ".svelte-kit/output/client",
         "binding": "ASSETS"
     },
-    "migrations": [
+    "services": [
         {
-            "tag": "v1",
-            "new_sqlite_classes": [
-                "StockAnalysisDurableObject"
-            ]
+            "binding": "STOCK_ANALYSIS_SERVICE",
+            "service": "stock-analysis-durable-object"
         }
     ],
-    "durable_objects": {
-        "bindings": [
-            {
-                "name": "STOCK_ANALYSIS_DO",
-                "class_name": "StockAnalysisDurableObject"
-            }
-        ]
-    },
     "routes": [
         {
             "pattern": "stock-analyzer.ronnelson.dev/*",

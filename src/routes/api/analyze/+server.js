@@ -8,18 +8,19 @@ export async function POST({ request, platform }) {
     console.log("Ticker received in POST request:", ticker);
 
     // Check for DO binding
-    if (!platform.env.STOCK_ANALYSIS_DO) {
+    if (!platform.env.STOCK_ANALYSIS_SERVICE) {
         return json({ error: 'Durable Object binding not found' }, { status: 500 });
     }
 
     try {
-        // A stub is a client used to invoke methods on the Durable Object
-        const stub = platform.env.STOCK_ANALYSIS_DO.get(platform.env.STOCK_ANALYSIS_DO.idFromName("stock-analysis"));
 
-        console.log("Durable Object stub created:", stub);
-
-        // Send the analysis request to the DO
-        const response = await stub.analyze(ticker);
+        const response = await platform.env.STOCK_ANALYSIS_SERVICE.fetch('https://stock-analysis/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ticker })
+        });
         console.log("Response from Durable Object:", response);
 
         const result = await response.json();
