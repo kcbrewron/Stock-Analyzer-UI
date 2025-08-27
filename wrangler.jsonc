@@ -2,7 +2,7 @@
     // Name of your application
     "name": "stock-analyzer-ui",
     // The main entry point for your application
-    "main": "build/index.js",
+    "main": "worker.js",
     // Use the latest compatibility date for Cloudflare Workers
     "compatibility_date": "2025-07-01",
     "compatibility_flags": ["nodejs_compat_v2"],
