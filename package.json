@@ -12,12 +12,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "docs": "jsdoc -c jsdoc.config.json",
-    "d1:create": "npx d1 create --name",
-    "d1:migrate": "npx d1 apply migration --database your-database-name --env your-env-name"
+    "docs": "jsdoc -c jsdoc.config.json"
   },
   "devDependencies": {
-    "@sveltejs/adapter-auto": "^6.1.0",
     "@sveltejs/adapter-cloudflare": "^7.2.3",
     "@sveltejs/kit": "^2.36.3",
     "@sveltejs/vite-plugin-svelte": "^6.1.3",

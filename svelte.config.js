@@ -9,7 +9,12 @@ const config = {
 		$utils: 'src/lib/utils'
 	},
 	kit: {
-		adapter: adapter()
+		adapter: adapter({
+			routes: {
+				include: ['/*'],
+				exclude: ['<all>']
+			}
+		})
 	},
 	preprocess: vitePreprocess()
 };
