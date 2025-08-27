@@ -18,11 +18,6 @@
             ]
         }
     ],
-    // Build configuration disabled - manual build required
-    // "build": {
-    //     "command": "yarn build",
-    //     "watch_dir": "src"
-    // },
     "durable_objects": {
         "bindings": [
             {
