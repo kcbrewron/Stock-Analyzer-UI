@@ -1,6 +1,6 @@
 // src/worker.js
-import { Server } from "../.svelte-kit/output/server/index.js";
-import { manifest, prerendered, base_path } from "../.svelte-kit/cloudflare-tmp/manifest.js";
+import { Server } from "./.svelte-kit/output/server/index.js";
+import { manifest, prerendered, base_path } from "./.svelte-kit/cloudflare-tmp/manifest.js";
 import { env } from "cloudflare:workers";
 
 // ../../node_modules/.pnpm/worktop@0.8.0-next.18/node_modules/worktop/cache/index.mjs
