@@ -1003,15 +1003,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/adapter-auto@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "@sveltejs/adapter-auto@npm:6.1.0"
-  peerDependencies:
-    "@sveltejs/kit": ^2.0.0
-  checksum: 10c0/8f0f38efbc26f7dfc523844b013c801ef1c1cfc9f3b0370ae2d446a9436297f9fd2cc9bc3c2b15649c99ae975275d58557b508640ec3ad8c75dbe0ed632935c8
-  languageName: node
-  linkType: hard
-
 "@sveltejs/adapter-cloudflare@npm:^7.2.3":
   version: 7.2.3
   resolution: "@sveltejs/adapter-cloudflare@npm:7.2.3"
@@ -3171,7 +3162,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "stock-analyzer-ui@workspace:."
   dependencies:
-    "@sveltejs/adapter-auto": "npm:^6.1.0"
     "@sveltejs/adapter-cloudflare": "npm:^7.2.3"
     "@sveltejs/kit": "npm:^2.36.3"
     "@sveltejs/vite-plugin-svelte": "npm:^6.1.3"
