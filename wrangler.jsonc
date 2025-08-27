@@ -1,0 +1,40 @@
+{
+    // Name of your application
+    "name": "stock-analyzer-ui",
+    // The main entry point for your application
+    "main": "build/index.js",
+    // Use the latest compatibility date for Cloudflare Workers
+    "compatibility_date": "2025-07-01",
+    "compatibility_flags": ["nodejs_compat"],
+    "assets": {
+        "directory": ".svelte-kit/output/client",
+        "binding": "ASSETS"
+    },
+    "migrations": [
+        {
+            "tag": "v1",
+            "new_sqlite_classes": [
+                "StockAnalysisDurableObject"
+            ]
+        }
+    ],
+    // Build configuration disabled - manual build required
+    // "build": {
+    //     "command": "yarn build",
+    //     "watch_dir": "src"
+    // },
+    "durable_objects": {
+        "bindings": [
+            {
+                "name": "STOCK_ANALYSIS_DO",
+                "class_name": "StockAnalysisDurableObject"
+            }
+        ]
+    },
+    "routes": [
+        {
+            "pattern": "stock-analyzer.ronnelson.dev/*",
+            "zone_name": "ronnelson.dev"
+        }
+    ]
+}

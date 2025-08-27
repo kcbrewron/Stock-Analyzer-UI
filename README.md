@@ -1,6 +1,8 @@
-# sveltekit-d1-tailwindcss-template
+# Stock Analysis User Interface
 
-A modern web application template combining SvelteKit, Cloudflare D1 Database, and TailwindCSS for rapid development of performant, full-stack applications.
+This application expects to deliver individual stock analysis utilizing cloudflares development platform. 
+
+Cloudflare is much more than just a CDN. Cloudflare offers all the basic utilities needed to standup a clean architecture and applications.
 
 ## Features
 
@@ -102,8 +104,8 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
 
 - [SvelteKit Documentation](https://kit.svelte.dev/docs)
-- [Cloudflare D1 Documentation](https://developers.cloudflare.com/d1/)
+- [Cloudflare Workers](https://developers.cloudflare.com/workers)
+- [Cloudflare Durable Objects](https://developers.cloudflare.com/durable-objects/)
 - [TailwindCSS Documentation](https://tailwindcss.com/docs)
