@@ -5,7 +5,8 @@
     "main": "build/index.js",
     // Use the latest compatibility date for Cloudflare Workers
     "compatibility_date": "2025-07-01",
-    "compatibility_flags": ["nodejs_compat"],
+    "compatibility_flags": ["nodejs_compat_v2"],
+    "workers_dev": false,
     "assets": {
         "directory": ".svelte-kit/output/client",
         "binding": "ASSETS"

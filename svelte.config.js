@@ -17,10 +17,7 @@ const config = {
 				exclude: ['<all>']
 			}
 		}),
-		// Enable environment variables from Cloudflare
-		env: {
-			dir: './environments'
-		}
+
 	},
 	preprocess: vitePreprocess()
 };
