@@ -1,4 +1,4 @@
-import cloudflareAdapter from '@sveltejs/adapter-cloudflare';
+import adapter from '@sveltejs/adapter-cloudflare';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -9,15 +9,7 @@ const config = {
 		$utils: 'src/lib/utils'
 	},
 	kit: {
-		// Use Cloudflare adapter
-		adapter: cloudflareAdapter({
-			// Configure the adapter for Cloudflare Pages
-			routes: {
-				include: ['/*'],
-				exclude: ['<all>']
-			}
-		}),
-
+		adapter: adapter()
 	},
 	preprocess: vitePreprocess()
 };
