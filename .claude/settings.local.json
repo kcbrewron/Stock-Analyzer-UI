@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(npx wrangler:*)",
-      "Bash(yarn build)"
+      "Bash(yarn build)",
+      "Read(c:\\Users\\kcbrewron\\OneDrive\\Pictures\\Screenshots 1/**)"
     ],
     "deny": [],
     "ask": []
