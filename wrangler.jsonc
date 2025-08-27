@@ -23,7 +23,7 @@
             {
                 "name": "STOCK_ANALYSIS_DO",
                 "class_name": "StockAnalysisDurableObject",
-                "script_name": "src/lib/utils/StockAnalysisDurableObject.js"
+                "script_name": "./src/lib/utils/StockAnalysisDurableObject.js"
             }
         ]
     },
