@@ -16,6 +16,14 @@
         "binding": "ASSETS",
         "directory": ".svelte-kit/cloudflare"
     },
+    "migrations": [
+        {
+            "tag": "<v2>",
+            "deleted_classes": [
+                "StockAnalysisDurableObject"
+            ]
+        }
+    ],
     "services": [
         {
             "binding": "STOCK_ANALYSIS_SERVICE",
