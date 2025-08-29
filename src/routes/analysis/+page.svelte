@@ -32,12 +32,12 @@
                     `Oh no. We have an error. We're working through this problem. Please try again later.`,
                 );
             }
-            console.log("Response from /api/analyze:", response?.data);
+            
             const resp = await response.json();
             
             console.log("Analysis response:", JSON.stringify(resp));
 
-            const analysisId = resp?.data?.analysis_Id || null;
+            const analysisId = resp?.data?.analysis_id || null;
 
             if (!analysisId) {
                 throw new Error("No analysis ID returned from server");

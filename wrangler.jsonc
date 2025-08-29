@@ -11,7 +11,7 @@
         "enabled": true,
         "head_sampling_rate": 1
     },
-    "workers_dev": false,
+    "workers_dev": true,
     "assets": {
         "binding": "ASSETS",
         "directory": ".svelte-kit/cloudflare"
