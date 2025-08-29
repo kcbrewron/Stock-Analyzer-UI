@@ -1,0 +1,57 @@
+{
+    "message": "Analysis started for ticker: F",
+    "data": {
+        "analysis_id": 1,
+        "status": "created",
+        "steps": [
+            {
+                "step_name": "get_company_information",
+                "status": "not_started",
+                "started_at": null,
+                "completed_at": null
+            },
+            {
+                "step_name": "get_price_history",
+                "status": "not_started",
+                "started_at": null,
+                "completed_at": null
+            },
+            {
+                "step_name": "get_news",
+                "status": "not_started",
+                "started_at": null,
+                "completed_at": null
+            },
+            {
+                "step_name": "get_analyst_ratings",
+                "status": "not_started",
+                "started_at": null,
+                "completed_at": null
+            },
+            {
+                "step_name": "get_social_media_sentiment",
+                "status": "not_started",
+                "started_at": null,
+                "completed_at": null
+            },
+            {
+                "step_name": "get_related_tickers",
+                "status": "not_started",
+                "started_at": null,
+                "completed_at": null
+            },
+            {
+                "step_name": "get_dividend_history",
+                "status": "not_started",
+                "started_at": null,
+                "completed_at": null
+            },
+            {
+                "step_name": "complete_analysis",
+                "status": "not_started",
+                "started_at": null,
+                "completed_at": null
+            }
+        ]
+    }
+}

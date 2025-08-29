@@ -1,5 +1,4 @@
 <script>
-    import { page } from "$app/stores";
     import { onDestroy } from "svelte";
     import Alert from "$lib/components/Alert.svelte";
     import { analysisStore } from "$lib/stores/analysisStore.js";
@@ -28,16 +27,17 @@
             });
 
             if (!response.ok) {
+                console.error("Server error:", response.statusText);
                 throw new Error(
                     `Oh no. We have an error. We're working through this problem. Please try again later.`,
                 );
             }
-
+            console.log("Response from /api/analyze:", response?.data);
             const resp = await response.json();
             
             console.log("Analysis response:", JSON.stringify(resp));
 
-            const analysisId = resp?.analysisId || null;
+            const analysisId = resp?.data?.analysis_Id || null;
 
             if (!analysisId) {
                 throw new Error("No analysis ID returned from server");
