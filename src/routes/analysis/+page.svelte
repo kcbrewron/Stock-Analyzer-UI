@@ -35,7 +35,7 @@
 
             const resp = await response.json();
             
-            console.log("Analysis response:", resp?.analysisId);
+            console.log("Analysis response:", JSON.stringify(resp));
 
             const analysisId = resp?.analysisId || null;
 
