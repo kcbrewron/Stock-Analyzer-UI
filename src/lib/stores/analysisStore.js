@@ -113,9 +113,9 @@ function createAnalysisStore() {
                 const scheduleNext = () => {
                     const pollingInterval = setTimeout(async () => {
                         try {
-                            const response = await fetch(`/api/analyze/status/${analysisId}`);
+                            const response = await fetch(`/api/analysis/${analysisId}`);
                             if (!response.ok) {
-                                throw new Error('Failed to fetch status');
+                                throw new Error('Failed to fetch analysis');
                             }
                             
                             const statusData = await response.json();
