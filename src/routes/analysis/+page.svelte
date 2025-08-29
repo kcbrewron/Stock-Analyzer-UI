@@ -34,11 +34,9 @@
             }
 
             const resp = await response.json();
+            
             console.log("Analysis response:", resp?.data?.analysisId);
 
-            if (data.error) {
-                throw new Error(data.error);
-            }
             const analysisId = resp?.data?.analysisId || null;
 
             if (!analysisId) {
