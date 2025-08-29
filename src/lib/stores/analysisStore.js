@@ -7,6 +7,8 @@ import { writable } from 'svelte/store';
  * @property {string} currentStep - Current step description
  * @property {Error|null} error - Error object if analysis failed
  * @property {string|null} results - Analysis results
+ * @property {string|null} analysisId - ID of the current analysis
+ * @property {number|null} pollingInterval - ID of the polling interval
  */
 
 /**
@@ -20,24 +22,36 @@ function createAnalysisStore() {
         progress: 0,
         currentStep: '',
         error: null,
-        results: null
+        results: null,
+        analysisId: null,
+        pollingInterval: null
     });
 
     return {
         subscribe: store.subscribe,
         
         /**
-         * Start the analysis process
+         * Start the analysis process with polling
+         * @param {string} analysisId - ID of the analysis to track
          */
-        startAnalysis: () => {
-            store.update(state => ({
-                ...state,
-                isAnalyzing: true,
-                progress: 0,
-                currentStep: 'Starting analysis...',
-                error: null,
-                results: null
-            }));
+        startAnalysis: (analysisId) => {
+            store.update(state => {
+                // Clear any existing polling
+                if (state.pollingInterval) {
+                    clearInterval(state.pollingInterval);
+                }
+                
+                return {
+                    ...state,
+                    isAnalyzing: true,
+                    progress: 0,
+                    currentStep: 'Starting analysis...',
+                    error: null,
+                    results: null,
+                    analysisId,
+                    pollingInterval: null
+                };
+            });
         },
 
         /**
@@ -81,15 +95,128 @@ function createAnalysisStore() {
         },
 
         /**
+         * Start smart polling for analysis status updates with exponential backoff
+         * @param {string} analysisId - ID of the analysis to poll
+         * @param {number} initialInterval - Initial polling interval in milliseconds (default: 1000)
+         * @param {number} maxInterval - Maximum polling interval in milliseconds (default: 10000)
+         */
+        startPolling: (analysisId, initialInterval = 1000, maxInterval = 10000) => {
+            store.update(state => {
+                // Clear existing polling
+                if (state.pollingInterval) {
+                    clearTimeout(state.pollingInterval);
+                }
+                
+                let currentInterval = initialInterval;
+                let consecutiveErrors = 0;
+                
+                const scheduleNext = () => {
+                    const pollingInterval = setTimeout(async () => {
+                        try {
+                            const response = await fetch(`/api/analyze/status/${analysisId}`);
+                            if (!response.ok) {
+                                throw new Error('Failed to fetch status');
+                            }
+                            
+                            const statusData = await response.json();
+                            
+                            // Reset error count on successful response
+                            consecutiveErrors = 0;
+                            
+                            if (statusData.error) {
+                                analysisStore.setError(new Error(statusData.error));
+                                return;
+                            }
+                            
+                            // Update progress based on status
+                            if (statusData.status === 'completed') {
+                                analysisStore.completeAnalysis(statusData.results);
+                                analysisStore.stopPolling();
+                                return;
+                            } else if (statusData.status === 'failed') {
+                                analysisStore.setError(new Error(statusData.error || 'Analysis failed'));
+                                analysisStore.stopPolling();
+                                return;
+                            } else if (statusData.status === 'running') {
+                                analysisStore.updateProgress(
+                                    statusData.progress || 0,
+                                    statusData.currentStep || 'Processing...'
+                                );
+                                
+                                // Smart interval adjustment based on progress
+                                if (statusData.progress > 0) {
+                                    // Fast polling when progress is being made
+                                    currentInterval = Math.max(initialInterval, currentInterval * 0.9);
+                                } else {
+                                    // Slower polling when no progress
+                                    currentInterval = Math.min(maxInterval, currentInterval * 1.2);
+                                }
+                            }
+                            
+                            // Schedule next poll
+                            scheduleNext();
+                            
+                        } catch (error) {
+                            console.error('Polling error:', error);
+                            consecutiveErrors++;
+                            
+                            // Exponential backoff on errors
+                            if (consecutiveErrors < 5) {
+                                currentInterval = Math.min(maxInterval, currentInterval * 2);
+                                scheduleNext();
+                            } else {
+                                analysisStore.setError(error);
+                                analysisStore.stopPolling();
+                            }
+                        }
+                    }, currentInterval);
+                    
+                    // Update store with current polling timeout ID
+                    store.update(state => ({
+                        ...state,
+                        pollingInterval
+                    }));
+                };
+                
+                // Start the first poll
+                scheduleNext();
+                
+                return state;
+            });
+        },
+
+        /**
+         * Stop polling for status updates
+         */
+        stopPolling: () => {
+            store.update(state => {
+                if (state.pollingInterval) {
+                    clearTimeout(state.pollingInterval);
+                }
+                return {
+                    ...state,
+                    pollingInterval: null
+                };
+            });
+        },
+
+        /**
          * Reset the analysis store to initial state
          */
         reset: () => {
-            store.set({
-                isAnalyzing: false,
-                progress: 0,
-                currentStep: '',
-                error: null,
-                results: null
+            store.update(state => {
+                if (state.pollingInterval) {
+                    clearTimeout(state.pollingInterval);
+                }
+                return {
+                    isAnalyzing: false,
+                    progress: 0,
+                    currentStep: '',
+                    error: null,
+                    results: null,
+                    analysisId: null,
+                    pollingInterval: null
+                };
             });
         }
     };

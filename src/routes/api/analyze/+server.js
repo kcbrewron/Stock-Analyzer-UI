@@ -21,9 +21,10 @@ export async function POST({ request, platform }) {
             },
             body: JSON.stringify({ ticker })
         });
-        console.log("Response from Durable Object:", response);
 
         const result = await response.json();
+        console.log("Response from Durable Object:", JSON.stringify(result));
+
         return json({ message: `Analysis started for ticker: ${ticker}`, data: result });
     } catch (error) {
         console.error('Error during stock analysis:', error);
