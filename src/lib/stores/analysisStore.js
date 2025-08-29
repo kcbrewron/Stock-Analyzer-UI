@@ -129,7 +129,13 @@ function createAnalysisStore() {
                             }
                             
                             // Update progress based on status
-                            if (statusData.status === 'completed') {
+                            // Only complete when status is 'completed' AND complete_analysis step is completed
+                            const completeAnalysisStep = statusData.steps?.find(step => step.step_name === 'complete_analysis');
+                            const isFullyComplete = statusData.status === 'completed' && 
+                                                   completeAnalysisStep && 
+                                                   completeAnalysisStep.status === 'completed';
+                            
+                            if (isFullyComplete) {
                                 analysisStore.completeAnalysis(statusData.results);
                                 analysisStore.stopPolling();
                                 return;
@@ -138,10 +144,28 @@ function createAnalysisStore() {
                                 analysisStore.stopPolling();
                                 return;
                             } else if (statusData.status === 'running') {
-                                analysisStore.updateProgress(
-                                    statusData.progress || 0,
-                                    statusData.currentStep || 'Processing...'
-                                );
+                                // Calculate progress based on completed steps
+                                let calculatedProgress = statusData.progress || 0;
+                                let currentStepName = statusData.currentStep || 'Processing...';
+                                
+                                if (statusData.steps && Array.isArray(statusData.steps)) {
+                                    const totalSteps = statusData.steps.length;
+                                    const completedSteps = statusData.steps.filter(step => step.status === 'completed').length;
+                                    calculatedProgress = Math.floor((completedSteps / totalSteps) * 100);
+                                    
+                                    // Find the current step being processed
+                                    const inProgressStep = statusData.steps.find(step => step.status === 'in_progress');
+                                    if (inProgressStep) {
+                                        currentStepName = `Processing: ${inProgressStep.step_name.replace(/_/g, ' ')}`;
+                                    } else if (completedSteps < totalSteps) {
+                                        const nextStep = statusData.steps.find(step => step.status === 'not_started');
+                                        if (nextStep) {
+                                            currentStepName = `Preparing: ${nextStep.step_name.replace(/_/g, ' ')}`;
+                                        }
+                                    }
+                                }
+                                
+                                analysisStore.updateProgress(calculatedProgress, currentStepName);
                                 
                                 // Smart interval adjustment based on progress
                                 if (statusData.progress > 0) {

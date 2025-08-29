@@ -19,7 +19,7 @@ export async function GET({ params, platform }) {
     }
 
     try {
-        const response = await platform.env.STOCK_ANALYSIS_SERVICE.fetch(`https://stock-analysis/analysis/${id}`, {
+        const response = await platform.env.STOCK_ANALYSIS_SERVICE.fetch(`https://stock-analysis.ronnelson.dev/analysis/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
