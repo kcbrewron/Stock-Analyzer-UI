@@ -29,11 +29,12 @@
             "binding": "STOCK_ANALYSIS_SERVICE",
             "service": "stock-analysis-durable-object"
         }
-    ],
-    "routes": [
-        {
-            "pattern": "stock-analyzer.ronnelson.dev/*",
-            "zone_name": "ronnelson.dev"
-        }
     ]
+    //,
+    // "routes": [
+    //     {
+    //         "pattern": "stock-analyzer.ronnelson.dev/*",
+    //         "zone_name": "ronnelson.dev"
+    //     }
+    // ]
 }
