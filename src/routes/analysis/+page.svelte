@@ -35,9 +35,9 @@
 
             const resp = await response.json();
             
-            console.log("Analysis response:", resp?.data?.analysisId);
+            console.log("Analysis response:", resp?.analysisId);
 
-            const analysisId = resp?.data?.analysisId || null;
+            const analysisId = resp?.analysisId || null;
 
             if (!analysisId) {
                 throw new Error("No analysis ID returned from server");
