@@ -1,6 +1,7 @@
 <script>
     import { onDestroy } from "svelte";
     import Alert from "$lib/components/Alert.svelte";
+    import CompanyInformation from "$lib/components/CompanyInformation.svelte";
     import { analysisStore } from "$lib/stores/analysisStore.js";
 
     let ticker;
@@ -168,6 +169,11 @@
                             </div>
                         </div>
                     </div>
+                {/if}
+
+                <!-- Company Information Section -->
+                {#if analysisState.companyData}
+                    <CompanyInformation companyData={analysisState.companyData} />
                 {/if}
 
                 {#if analysisState.results && !analysisState.isAnalyzing}

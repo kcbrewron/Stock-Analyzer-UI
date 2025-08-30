@@ -9,6 +9,7 @@ import { writable } from 'svelte/store';
  * @property {string|null} results - Analysis results
  * @property {string|null} analysisId - ID of the current analysis
  * @property {number|null} pollingInterval - ID of the polling interval
+ * @property {Object|null} companyData - Company information data
  */
 
 /**
@@ -24,7 +25,8 @@ function createAnalysisStore() {
         error: null,
         results: null,
         analysisId: null,
-        pollingInterval: null
+        pollingInterval: null,
+        companyData: null
     });
 
     return {
@@ -49,7 +51,8 @@ function createAnalysisStore() {
                     error: null,
                     results: null,
                     analysisId,
-                    pollingInterval: null
+                    pollingInterval: null,
+                    companyData: null
                 };
             });
         },
@@ -91,6 +94,17 @@ function createAnalysisStore() {
                 isAnalyzing: false,
                 error,
                 currentStep: 'Analysis failed'
+            }));
+        },
+
+        /**
+         * Update company data when it becomes available
+         * @param {Object} companyData - Company information data
+         */
+        updateCompanyData: (companyData) => {
+            store.update(state => ({
+                ...state,
+                companyData
             }));
         },
 
@@ -162,6 +176,12 @@ function createAnalysisStore() {
                                         if (nextStep) {
                                             currentStepName = `Preparing: ${nextStep.step_name.replace(/_/g, ' ')}`;
                                         }
+                                    }
+                                    
+                                    // Check if company information step is completed and extract data
+                                    const companyInfoStep = statusData.steps.find(step => step.step_name === 'get_company_information');
+                                    if (companyInfoStep && companyInfoStep.status === 'completed' && statusData.company_data) {
+                                        analysisStore.updateCompanyData(statusData.company_data);
                                     }
                                 }
                                 
@@ -239,7 +259,8 @@ function createAnalysisStore() {
                     error: null,
                     results: null,
                     analysisId: null,
-                    pollingInterval: null
+                    pollingInterval: null,
+                    companyData: null
                 };
             });
         }
